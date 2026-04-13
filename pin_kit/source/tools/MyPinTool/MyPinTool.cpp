@@ -4,308 +4,313 @@
  */
 
 /*! @file
- *  This is an example of the PIN tool that demonstrates some basic PIN APIs
- *  and could serve as the starting point for developing your first PIN tool
+ *  MyPinTool.cpp
+ *  Dynamic memory allocation analysis tool using Intel PIN.
+ *
+ *  Week 1-4 scope:
+ *  - Hook malloc/free/calloc/realloc
+ *  - Track allocation metadata at runtime
+ *  - Aggregate memory usage per calling function
+ *  - Generate a report at program exit
  */
 
 #include "pin.H"
-#include <iostream>
-#include <fstream>
-#include <map>
-#include <vector>
 #include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
 
 /* ================================================================== */
 // Global variables
 /* ================================================================== */
 
-std::map<VOID *, int> dist;
-std::map<VOID *, int> reuse;
-int line = 0;
-
-UINT64 insCount = 0;    // number of dynamically executed instructions
-UINT64 bblCount = 0;    // number of dynamically executed basic blocks
-UINT64 threadCount = 0; // total number of threads, including main thread
-UINT64 funcCount = 0;   // number of dynamically executed function calls (function invocations)
-
-static UINT64 memAccessCount = 0;     // number of memory accesses recorded
-static UINT64 MAX_MEM_ACCESS = 10000; // limit (you can change)
-
-UINT64 totalDistance = 0;
-UINT64 distanceCount = 0;
-
 std::ostream *out = &std::cerr;
+PIN_LOCK lock;
+
+struct AllocationInfo
+{
+    ADDRINT addr;
+    size_t size;
+    std::string funcName;
+    bool freed;
+};
+
+struct FunctionStats
+{
+    UINT64 allocCount = 0;
+    UINT64 freeCount = 0;
+    UINT64 bytesAllocated = 0;
+    UINT64 bytesFreed = 0;
+};
+
+static std::map<ADDRINT, AllocationInfo> allocations;
+static std::map<std::string, FunctionStats> functionStats;
 
 /* ===================================================================== */
 // Command line switches
 /* ===================================================================== */
 KNOB<std::string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool", "o", "", "specify file name for MyPinTool output");
 
-KNOB<BOOL> KnobCount(KNOB_MODE_WRITEONCE, "pintool", "count", "1",
-                     "count instructions, basic blocks and threads in the application");
-
 /* ===================================================================== */
 // Utilities
 /* ===================================================================== */
 
-/*!
- *  Print out help message.
- */
 INT32 Usage()
 {
-    std::cerr << "This tool prints out the number of dynamically executed " << std::endl
-              << "instructions, basic blocks and threads in the application." << std::endl
-              << std::endl;
-
+    std::cerr << "This tool tracks dynamic memory allocations (malloc/free/calloc/realloc)." << std::endl;
+    std::cerr << "It reports allocation counts and total bytes per calling function." << std::endl;
+    std::cerr << std::endl;
     std::cerr << KNOB_BASE::StringKnobSummary() << std::endl;
-
     return -1;
 }
 
-/* ===================================================================== */
-// Analysis routines
-/* ===================================================================== */
-
-/*!
- * Count function invocations.
- * This function is called every time a function (routine) is entered.
- * It increments the global function call counter.
- */
-VOID CountFunc()
+static std::string GetRoutineNameByAddress(ADDRINT ip)
 {
-    funcCount++;
+    std::string name = "UNKNOWN";
+
+    PIN_LockClient();
+    RTN rtn = RTN_FindByAddress(ip);
+    if (RTN_Valid(rtn))
+    {
+        name = RTN_Name(rtn);
+    }
+    PIN_UnlockClient();
+
+    return name;
 }
 
-/*!
- * Increase counter of the executed basic blocks and instructions.
- * This function is called for every basic block when it is about to be executed.
- * @param[in]   numInstInBbl    number of instructions in the basic block
- * @note use atomic operations for multi-threaded applications
- */
-VOID CountBbl(UINT32 numInstInBbl)
+static void AddAllocation(ADDRINT addr, size_t size, ADDRINT callerIp)
 {
-    bblCount++;
-    insCount += numInstInBbl;
+    if (addr == 0)
+        return;
+
+    std::string caller = GetRoutineNameByAddress(callerIp);
+
+    PIN_GetLock(&lock, 1);
+
+    AllocationInfo info;
+    info.addr = addr;
+    info.size = size;
+    info.funcName = caller;
+    info.freed = false;
+    allocations[addr] = info;
+
+    FunctionStats &stats = functionStats[caller];
+    stats.allocCount++;
+    stats.bytesAllocated += size;
+
+    PIN_ReleaseLock(&lock);
 }
 
-/*!
- * Record memory access information.
- * This function is called before a memory instruction is executed.
- * It logs the instruction pointer (PC), type of access (Read/Write),
- * and the effective memory address being accessed.
- * @param[in]   ip      instruction pointer (program counter) of the instruction
- * @param[in]   type    type of memory access ('R' for read, 'W' for write)
- * @param[in]   addr    effective memory address accessed by the instruction
- */
-VOID RecordMemAccess(VOID *ip, CHAR type, VOID *addr)
+static void AddFree(ADDRINT addr)
 {
-    if (memAccessCount >= MAX_MEM_ACCESS)
+    if (addr == 0)
+        return;
+
+    PIN_GetLock(&lock, 2);
+
+    std::map<ADDRINT, AllocationInfo>::iterator it = allocations.find(addr);
+    if (it != allocations.end() && !it->second.freed)
     {
-        PIN_ExitApplication(0);
+        it->second.freed = true;
+        FunctionStats &stats = functionStats[it->second.funcName];
+        stats.freeCount++;
+        stats.bytesFreed += it->second.size;
     }
 
-    int distance = -1;
+    PIN_ReleaseLock(&lock);
+}
 
-    if (dist.find(addr) != dist.end())
+/* ===================================================================== */
+// Replacement routines for memory allocators
+/* ===================================================================== */
+
+typedef VOID *(*MALLOC_FUNCPTR)(size_t);
+typedef VOID (*FREE_FUNCPTR)(VOID *);
+typedef VOID *(*CALLOC_FUNCPTR)(size_t, size_t);
+typedef VOID *(*REALLOC_FUNCPTR)(VOID *, size_t);
+
+VOID *MallocReplacement(AFUNPTR origMalloc, size_t size, ADDRINT callerIp)
+{
+    VOID *ret = ((MALLOC_FUNCPTR)origMalloc)(size);
+    AddAllocation((ADDRINT)ret, size, callerIp);
+    return ret;
+}
+
+VOID FreeReplacement(AFUNPTR origFree, VOID *ptr)
+{
+    AddFree((ADDRINT)ptr);
+    ((FREE_FUNCPTR)origFree)(ptr);
+}
+
+VOID *CallocReplacement(AFUNPTR origCalloc, size_t nmemb, size_t size, ADDRINT callerIp)
+{
+    VOID *ret = ((CALLOC_FUNCPTR)origCalloc)(nmemb, size);
+    AddAllocation((ADDRINT)ret, nmemb * size, callerIp);
+    return ret;
+}
+
+VOID *ReallocReplacement(AFUNPTR origRealloc, VOID *ptr, size_t size, ADDRINT callerIp)
+{
+    // Treat realloc as free(old) + alloc(new) for analysis purposes.
+    if (ptr != NULL)
     {
-        distance = line - dist[addr];
-
-        totalDistance += distance;
-        distanceCount++;
+        AddFree((ADDRINT)ptr);
     }
 
-    if (reuse.find(addr) == reuse.end())
-        reuse[addr] = 0;
-    else
-        reuse[addr]++;
-
-    std::string rw = (type == 'R') ? "Read" : "Write";
-
-    *out << std::hex << ip << ", "
-         << rw << ", "
-         << std::hex << addr << ", "
-         << std::dec << distance << ", "
-         << reuse[addr] << std::endl;
-
-    dist[addr] = line;
-
-    line++;
-
-    memAccessCount++;
+    VOID *ret = ((REALLOC_FUNCPTR)origRealloc)(ptr, size);
+    AddAllocation((ADDRINT)ret, size, callerIp);
+    return ret;
 }
 
 /* ===================================================================== */
 // Instrumentation callbacks
 /* ===================================================================== */
 
-/*!
- * Insert call to the CountBbl() analysis routine before every basic block
- * of the trace.
- * This function is called every time a new trace is encountered.
- * @param[in]   trace    trace to be instrumented
- * @param[in]   v        value specified by the tool in the TRACE_AddInstrumentFunction
- *                       function call
- */
-VOID Trace(TRACE trace, VOID *v)
+VOID ImageLoad(IMG img, VOID *v)
 {
-    // Visit every basic block in the trace
-    for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
+    if (!IMG_Valid(img))
+        return;
+
+    RTN rtn = RTN_FindByName(img, "malloc");
+    if (RTN_Valid(rtn))
     {
-        // Insert a call to CountBbl() before every basic bloc, passing the number of instructions
-        BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR)CountBbl, IARG_UINT32, BBL_NumIns(bbl), IARG_END);
+        RTN_Open(rtn);
+        RTN_ReplaceSignature(rtn, AFUNPTR(MallocReplacement),
+                             IARG_ORIG_FUNCPTR,
+                             IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+                             IARG_RETURN_IP,
+                             IARG_END);
+        RTN_Close(rtn);
+    }
+
+    rtn = RTN_FindByName(img, "free");
+    if (RTN_Valid(rtn))
+    {
+        RTN_Open(rtn);
+        RTN_ReplaceSignature(rtn, AFUNPTR(FreeReplacement),
+                             IARG_ORIG_FUNCPTR,
+                             IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+                             IARG_END);
+        RTN_Close(rtn);
+    }
+
+    rtn = RTN_FindByName(img, "calloc");
+    if (RTN_Valid(rtn))
+    {
+        RTN_Open(rtn);
+        RTN_ReplaceSignature(rtn, AFUNPTR(CallocReplacement),
+                             IARG_ORIG_FUNCPTR,
+                             IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+                             IARG_FUNCARG_ENTRYPOINT_VALUE, 1,
+                             IARG_RETURN_IP,
+                             IARG_END);
+        RTN_Close(rtn);
+    }
+
+    rtn = RTN_FindByName(img, "realloc");
+    if (RTN_Valid(rtn))
+    {
+        RTN_Open(rtn);
+        RTN_ReplaceSignature(rtn, AFUNPTR(ReallocReplacement),
+                             IARG_ORIG_FUNCPTR,
+                             IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+                             IARG_FUNCARG_ENTRYPOINT_VALUE, 1,
+                             IARG_RETURN_IP,
+                             IARG_END);
+        RTN_Close(rtn);
     }
 }
 
-/*!
- * Instrument instructions for memory access tracing.
- * This function is called for every instruction and inserts analysis
- * routines before instructions that perform memory operations.
- * It identifies memory reads and writes and records their addresses.
- * @param[in]   ins     instruction to be instrumented
- * @param[in]   v       value specified by the tool in the
- *                      INS_AddInstrumentFunction function call
- */
-VOID Instruction(INS ins, VOID *v)
-{
-    UINT32 memOperands = INS_MemoryOperandCount(ins);
+/* ===================================================================== */
+// Final report
+/* ===================================================================== */
 
-    for (UINT32 memOp = 0; memOp < memOperands; memOp++)
-    {
-        // Memory READ
-        if (INS_MemoryOperandIsRead(ins, memOp))
-        {
-            INS_InsertPredicatedCall(
-                ins, IPOINT_BEFORE, (AFUNPTR)RecordMemAccess,
-                IARG_INST_PTR,
-                IARG_UINT32, 'R',
-                IARG_MEMORYOP_EA, memOp,
-                IARG_END);
-        }
-
-        // Memory WRITE
-        if (INS_MemoryOperandIsWritten(ins, memOp))
-        {
-            INS_InsertPredicatedCall(
-                ins, IPOINT_BEFORE, (AFUNPTR)RecordMemAccess,
-                IARG_INST_PTR,
-                IARG_UINT32, 'W',
-                IARG_MEMORYOP_EA, memOp,
-                IARG_END);
-        }
-    }
-}
-
-/*!
- * Instrument routines (functions) to count function calls.
- * This function is invoked for every routine in the application.
- * It inserts a call to CountFunc() before the routine executes,
- * thereby counting each function invocation.
- * @param[in]   rtn     routine (function) to be instrumented
- * @param[in]   v       value specified by the tool in the
- *                      RTN_AddInstrumentFunction function call
- */
-VOID Routine(RTN rtn, VOID *v)
-{
-    RTN_Open(rtn);
-
-    RTN_InsertCall(
-        rtn, IPOINT_BEFORE,
-        (AFUNPTR)CountFunc,
-        IARG_END);
-
-    RTN_Close(rtn);
-}
-
-/*!
- * Increase counter of threads in the application.
- * This function is called for every thread created by the application when it is
- * about to start running (including the root thread).
- * @param[in]   threadIndex     ID assigned by PIN to the new thread
- * @param[in]   ctxt            initial register state for the new thread
- * @param[in]   flags           thread creation flags (OS specific)
- * @param[in]   v               value specified by the tool in the
- *                              PIN_AddThreadStartFunction function call
- */
-VOID ThreadStart(THREADID threadIndex, CONTEXT *ctxt, INT32 flags, VOID *v) { threadCount++; }
-
-/*!
- * Print out analysis results.
- * This function is called when the application exits.
- * @param[in]   code            exit code of the application
- * @param[in]   v               value specified by the tool in the
- *                              PIN_AddFiniFunction function call
- */
 VOID Fini(INT32 code, VOID *v)
 {
-    *out << "===============================================" << std::endl;
+    std::ostream &os = *out;
 
-    double avg = 0.0;
-    if (distanceCount != 0)
-        avg = (double)totalDistance / distanceCount;
+    os << "===============================================" << std::endl;
+    os << "Memory Allocation Report" << std::endl;
+    os << "===============================================" << std::endl;
 
-    std::cout << "Average Distance: " << avg << std::endl;
-
-    std::vector<std::pair<VOID *, int>> vec(reuse.begin(), reuse.end());
-
+    std::vector<std::pair<std::string, FunctionStats>> vec(functionStats.begin(), functionStats.end());
     std::sort(vec.begin(), vec.end(),
-              [](auto &a, auto &b)
+              [](const std::pair<std::string, FunctionStats> &a,
+                 const std::pair<std::string, FunctionStats> &b)
               {
-                  return a.second > b.second;
+                  return a.second.bytesAllocated > b.second.bytesAllocated;
               });
 
-    std::cout << "Top 5 Reuse Addresses:" << std::endl;
-
-    for (int i = 0; i < 5 && i < (int)vec.size(); i++)
+    os << "Per-function allocation summary:" << std::endl;
+    for (size_t i = 0; i < vec.size(); ++i)
     {
-        std::cout << std::hex << vec[i].first
-                  << " -> " << std::dec << vec[i].second << std::endl;
+        const std::string &name = vec[i].first;
+        const FunctionStats &st = vec[i].second;
+        os << name << " | allocs: " << st.allocCount
+           << " | frees: " << st.freeCount
+           << " | bytes allocated: " << st.bytesAllocated
+           << " | bytes freed: " << st.bytesFreed
+           << " | bytes active: " << (st.bytesAllocated - st.bytesFreed)
+           << std::endl;
     }
 
-    *out << "===============================================" << std::endl;
+    os << std::endl;
+    os << "Active allocations:" << std::endl;
+    UINT64 activeCount = 0;
+    UINT64 activeBytes = 0;
+
+    for (std::map<ADDRINT, AllocationInfo>::iterator it = allocations.begin(); it != allocations.end(); ++it)
+    {
+        if (!it->second.freed)
+        {
+            activeCount++;
+            activeBytes += it->second.size;
+            os << "addr=0x" << std::hex << it->second.addr << std::dec
+               << " size=" << it->second.size
+               << " func=" << it->second.funcName << std::endl;
+        }
+    }
+
+    os << std::endl;
+    os << "Summary:" << std::endl;
+    os << "Total unique allocations tracked: " << allocations.size() << std::endl;
+    os << "Active allocations remaining: " << activeCount << std::endl;
+    os << "Active bytes remaining: " << activeBytes << std::endl;
+    os << "===============================================" << std::endl;
 }
 
-/*!
- * The main procedure of the tool.
- * This function is called when the application image is loaded but not yet started.
- * @param[in]   argc            total number of elements in the argv array
- * @param[in]   argv            array of command line arguments,
- *                              including pin -t <toolname> -- ...
- */
+/* ===================================================================== */
+// Main
+/* ===================================================================== */
+
 int main(int argc, char *argv[])
 {
-    // Initialize PIN library. Print help message if -h(elp) is specified
-    // in the command line or the command line is invalid
     if (PIN_Init(argc, argv))
     {
         return Usage();
     }
 
-    std::string fileName = KnobOutputFile.Value();
+    PIN_InitLock(&lock);
 
+    std::string fileName = KnobOutputFile.Value();
     if (fileName.empty())
     {
-        fileName = "mem.trace";
+        fileName = "mypintool.out";
     }
 
     out = new std::ofstream(fileName.c_str());
 
-    // Register instruction-level instrumentation (memory tracing)
-    INS_AddInstrumentFunction(Instruction, 0);
-
-    // Register function to be called for every routine
-    RTN_AddInstrumentFunction(Routine, 0);
-
-    if (KnobCount)
+    if (!out || !(*out))
     {
-        // Register function to be called to instrument traces
-        TRACE_AddInstrumentFunction(Trace, 0);
-
-        // Register function to be called for every thread before it starts running
-        PIN_AddThreadStartFunction(ThreadStart, 0);
-
-        // Register function to be called when the application exits
-        PIN_AddFiniFunction(Fini, 0);
+        std::cerr << "Failed to open output file: " << fileName << std::endl;
+        return 1;
     }
+
+    IMG_AddInstrumentFunction(ImageLoad, 0);
+    PIN_AddFiniFunction(Fini, 0);
 
     std::cerr << "===============================================" << std::endl;
     std::cerr << "This application is instrumented by MyPinTool" << std::endl;
@@ -315,7 +320,6 @@ int main(int argc, char *argv[])
     }
     std::cerr << "===============================================" << std::endl;
 
-    // Start the program, never returns
     PIN_StartProgram();
 
     return 0;
