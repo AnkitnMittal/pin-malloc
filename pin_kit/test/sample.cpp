@@ -1,30 +1,12 @@
-#include <iostream>
-#include <cstdlib>
+#include <stdlib.h>
 
-void foo() {
-    int* a = (int*)malloc(100 * sizeof(int));
-    int* b = (int*)malloc(200 * sizeof(int));
+int main()
+{
+    int *a = (int *)malloc(100);
+    int *b = (int *)calloc(50, sizeof(int));
 
-    free(a);   // freed
-    // b is intentionally NOT freed (to simulate active allocation)
-}
-
-void bar() {
-    double* x = (double*)malloc(50 * sizeof(double));
-    free(x);
-}
-
-int main() {
-    std::cout << "Running test program...\n";
-
-    int* p = (int*)malloc(10 * sizeof(int));
-    free(p);
-
-    foo();
-    bar();
-
-    // One more allocation not freed
-    char* leak = (char*)malloc(500);
+    a = (int *)realloc(a, 200);
+    free(a);
 
     return 0;
 }

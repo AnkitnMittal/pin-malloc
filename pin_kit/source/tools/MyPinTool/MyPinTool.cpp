@@ -1,330 +1,331 @@
-/*
- * Copyright (C) 2007-2023 Intel Corporation.
- * SPDX-License-Identifier: MIT
- */
-
-/*! @file
- *  MyPinTool.cpp
- *  Dynamic memory allocation analysis tool using Intel PIN.
- *
- *  Week 1-4 scope:
- *  - Hook malloc/free/calloc/realloc
- *  - Track allocation metadata at runtime
- *  - Aggregate memory usage per calling function
- *  - Generate a report at program exit
- */
-
 #include "pin.H"
-#include <algorithm>
-#include <fstream>
 #include <iostream>
+#include <fstream>
 #include <map>
 #include <string>
-#include <vector>
 
-/* ================================================================== */
-// Global variables
-/* ================================================================== */
+using std::cerr;
+using std::endl;
+using std::map;
+using std::ofstream;
+using std::string;
 
-std::ostream *out = &std::cerr;
+/* ============================================================ */
+// OUTPUT
+/* ============================================================ */
+
+ofstream outFile;
+
+/* ============================================================ */
+// THREAD SAFETY
+/* ============================================================ */
+
 PIN_LOCK lock;
 
-struct AllocationInfo
+/* ============================================================ */
+// DATA STRUCTURES
+/* ============================================================ */
+
+struct AllocInfo
 {
-    ADDRINT addr;
     size_t size;
-    std::string funcName;
-    bool freed;
+    string funcName;
 };
 
-struct FunctionStats
+map<ADDRINT, AllocInfo> activeAllocs;
+map<string, size_t> totalMemPerFunc;
+map<string, size_t> allocCountPerFunc;
+
+/* ============================================================ */
+// ORIGINAL FUNCTION POINTERS
+/* ============================================================ */
+
+typedef VOID *(*malloc_t)(size_t);
+typedef VOID *(*calloc_t)(size_t, size_t);
+typedef VOID *(*realloc_t)(VOID *, size_t);
+typedef VOID (*free_t)(VOID *);
+
+malloc_t real_malloc = NULL;
+calloc_t real_calloc = NULL;
+realloc_t real_realloc = NULL;
+free_t real_free = NULL;
+
+/* ============================================================ */
+// UTILITY
+/* ============================================================ */
+
+string GetFuncName(ADDRINT ip)
 {
-    UINT64 allocCount = 0;
-    UINT64 freeCount = 0;
-    UINT64 bytesAllocated = 0;
-    UINT64 bytesFreed = 0;
-};
-
-static std::map<ADDRINT, AllocationInfo> allocations;
-static std::map<std::string, FunctionStats> functionStats;
-
-/* ===================================================================== */
-// Command line switches
-/* ===================================================================== */
-KNOB<std::string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool", "o", "", "specify file name for MyPinTool output");
-
-/* ===================================================================== */
-// Utilities
-/* ===================================================================== */
-
-INT32 Usage()
-{
-    std::cerr << "This tool tracks dynamic memory allocations (malloc/free/calloc/realloc)." << std::endl;
-    std::cerr << "It reports allocation counts and total bytes per calling function." << std::endl;
-    std::cerr << std::endl;
-    std::cerr << KNOB_BASE::StringKnobSummary() << std::endl;
-    return -1;
-}
-
-static std::string GetRoutineNameByAddress(ADDRINT ip)
-{
-    std::string name = "UNKNOWN";
-
     PIN_LockClient();
     RTN rtn = RTN_FindByAddress(ip);
+    string name = "UNKNOWN";
     if (RTN_Valid(rtn))
-    {
         name = RTN_Name(rtn);
-    }
     PIN_UnlockClient();
-
     return name;
 }
 
-static void AddAllocation(ADDRINT addr, size_t size, ADDRINT callerIp)
-{
-    if (addr == 0)
-        return;
+/* ============================================================ */
+// WRAPPERS
+/* ============================================================ */
 
-    std::string caller = GetRoutineNameByAddress(callerIp);
+VOID *MyMalloc(size_t size, ADDRINT ip)
+{
+    VOID *ret = real_malloc(size);
+    if (!ret)
+        return ret;
 
     PIN_GetLock(&lock, 1);
 
-    AllocationInfo info;
-    info.addr = addr;
-    info.size = size;
-    info.funcName = caller;
-    info.freed = false;
-    allocations[addr] = info;
+    string func = GetFuncName(ip);
 
-    FunctionStats &stats = functionStats[caller];
-    stats.allocCount++;
-    stats.bytesAllocated += size;
+    activeAllocs[(ADDRINT)ret] = {size, func};
+    totalMemPerFunc[func] += size;
+    allocCountPerFunc[func]++;
+
+    outFile << "[ALLOC] Addr: " << std::hex << (ADDRINT)ret
+            << " Size: " << std::dec << size
+            << " Func: " << func << endl;
 
     PIN_ReleaseLock(&lock);
+    return ret;
 }
 
-static void AddFree(ADDRINT addr)
+VOID *MyCalloc(size_t nmemb, size_t size, ADDRINT ip)
 {
-    if (addr == 0)
-        return;
+    VOID *ret = real_calloc(nmemb, size);
+    if (!ret)
+        return ret;
 
-    PIN_GetLock(&lock, 2);
+    PIN_GetLock(&lock, 1);
 
-    std::map<ADDRINT, AllocationInfo>::iterator it = allocations.find(addr);
-    if (it != allocations.end() && !it->second.freed)
+    size_t total = nmemb * size;
+    string func = GetFuncName(ip);
+
+    activeAllocs[(ADDRINT)ret] = {total, func};
+    totalMemPerFunc[func] += total;
+    allocCountPerFunc[func]++;
+
+    outFile << "[CALLOC] Addr: " << std::hex << (ADDRINT)ret
+            << " Size: " << std::dec << total
+            << " Func: " << func << endl;
+
+    PIN_ReleaseLock(&lock);
+    return ret;
+}
+
+VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
+{
+    VOID *ret = real_realloc(ptr, size);
+
+    PIN_GetLock(&lock, 1);
+
+    // if success → remove old
+    if (ret != NULL && ptr != NULL)
     {
-        it->second.freed = true;
-        FunctionStats &stats = functionStats[it->second.funcName];
-        stats.freeCount++;
-        stats.bytesFreed += it->second.size;
+        auto it = activeAllocs.find((ADDRINT)ptr);
+        if (it != activeAllocs.end())
+            activeAllocs.erase(it);
+    }
+
+    if (ret != NULL)
+    {
+        string func = GetFuncName(ip);
+
+        activeAllocs[(ADDRINT)ret] = {size, func};
+        totalMemPerFunc[func] += size;
+        allocCountPerFunc[func]++;
+
+        outFile << "[REALLOC] Addr: " << std::hex << (ADDRINT)ret
+                << " Size: " << std::dec << size
+                << " Func: " << func << endl;
     }
 
     PIN_ReleaseLock(&lock);
-}
-
-/* ===================================================================== */
-// Replacement routines for memory allocators
-/* ===================================================================== */
-
-typedef VOID *(*MALLOC_FUNCPTR)(size_t);
-typedef VOID (*FREE_FUNCPTR)(VOID *);
-typedef VOID *(*CALLOC_FUNCPTR)(size_t, size_t);
-typedef VOID *(*REALLOC_FUNCPTR)(VOID *, size_t);
-
-VOID *MallocReplacement(AFUNPTR origMalloc, size_t size, ADDRINT callerIp)
-{
-    VOID *ret = ((MALLOC_FUNCPTR)origMalloc)(size);
-    AddAllocation((ADDRINT)ret, size, callerIp);
     return ret;
 }
 
-VOID FreeReplacement(AFUNPTR origFree, VOID *ptr)
+VOID MyFree(VOID *ptr)
 {
-    AddFree((ADDRINT)ptr);
-    ((FREE_FUNCPTR)origFree)(ptr);
-}
+    PIN_GetLock(&lock, 1);
 
-VOID *CallocReplacement(AFUNPTR origCalloc, size_t nmemb, size_t size, ADDRINT callerIp)
-{
-    VOID *ret = ((CALLOC_FUNCPTR)origCalloc)(nmemb, size);
-    AddAllocation((ADDRINT)ret, nmemb * size, callerIp);
-    return ret;
-}
+    auto it = activeAllocs.find((ADDRINT)ptr);
 
-VOID *ReallocReplacement(AFUNPTR origRealloc, VOID *ptr, size_t size, ADDRINT callerIp)
-{
-    // Treat realloc as free(old) + alloc(new) for analysis purposes.
-    if (ptr != NULL)
+    if (it != activeAllocs.end())
     {
-        AddFree((ADDRINT)ptr);
+        outFile << "[FREE ] Addr: " << std::hex << (ADDRINT)ptr
+                << " Size: " << std::dec << it->second.size
+                << " Func: " << it->second.funcName << endl;
+
+        activeAllocs.erase(it);
     }
 
-    VOID *ret = ((REALLOC_FUNCPTR)origRealloc)(ptr, size);
-    AddAllocation((ADDRINT)ret, size, callerIp);
-    return ret;
+    PIN_ReleaseLock(&lock);
+
+    real_free(ptr);
 }
 
-/* ===================================================================== */
-// Instrumentation callbacks
-/* ===================================================================== */
+/* ============================================================ */
+// IMAGE LOAD
+/* ============================================================ */
 
 VOID ImageLoad(IMG img, VOID *v)
 {
-    if (!IMG_Valid(img))
-        return;
+    cerr << "Loaded Image: " << IMG_Name(img) << endl;
 
-    RTN rtn = RTN_FindByName(img, "malloc");
-    if (RTN_Valid(rtn))
+    /* malloc */
+    RTN mallocRtn = RTN_FindByName(img, "malloc");
+    if (RTN_Valid(mallocRtn))
     {
-        RTN_Open(rtn);
-        RTN_ReplaceSignature(rtn, AFUNPTR(MallocReplacement),
-                             IARG_ORIG_FUNCPTR,
-                             IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
-                             IARG_RETURN_IP,
-                             IARG_END);
-        RTN_Close(rtn);
+        cerr << "Replacing malloc in: " << IMG_Name(img) << endl;
+
+        PROTO proto = PROTO_Allocate(
+            PIN_PARG(void *), CALLINGSTD_DEFAULT,
+            "malloc",
+            PIN_PARG(size_t),
+            PIN_PARG_END());
+
+        real_malloc = (malloc_t)RTN_ReplaceSignature(
+            mallocRtn, AFUNPTR(MyMalloc),
+            IARG_PROTOTYPE, proto,
+            IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+            IARG_RETURN_IP,
+            IARG_END);
+
+        PROTO_Free(proto);
     }
 
-    rtn = RTN_FindByName(img, "free");
-    if (RTN_Valid(rtn))
+    /* calloc */
+    RTN callocRtn = RTN_FindByName(img, "calloc");
+    if (!RTN_Valid(callocRtn))
+        callocRtn = RTN_FindByName(img, "__libc_calloc");
+
+    if (RTN_Valid(callocRtn))
     {
-        RTN_Open(rtn);
-        RTN_ReplaceSignature(rtn, AFUNPTR(FreeReplacement),
-                             IARG_ORIG_FUNCPTR,
-                             IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
-                             IARG_END);
-        RTN_Close(rtn);
+        cerr << "Replacing calloc in: " << IMG_Name(img) << endl;
+
+        PROTO proto = PROTO_Allocate(
+            PIN_PARG(void *), CALLINGSTD_DEFAULT,
+            "calloc",
+            PIN_PARG(size_t),
+            PIN_PARG(size_t),
+            PIN_PARG_END());
+
+        real_calloc = (calloc_t)RTN_ReplaceSignature(
+            callocRtn, AFUNPTR(MyCalloc),
+            IARG_PROTOTYPE, proto,
+            IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+            IARG_FUNCARG_ENTRYPOINT_VALUE, 1,
+            IARG_RETURN_IP,
+            IARG_END);
+
+        PROTO_Free(proto);
     }
 
-    rtn = RTN_FindByName(img, "calloc");
-    if (RTN_Valid(rtn))
+    /* realloc */
+    RTN reallocRtn = RTN_FindByName(img, "realloc");
+    if (RTN_Valid(reallocRtn))
     {
-        RTN_Open(rtn);
-        RTN_ReplaceSignature(rtn, AFUNPTR(CallocReplacement),
-                             IARG_ORIG_FUNCPTR,
-                             IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
-                             IARG_FUNCARG_ENTRYPOINT_VALUE, 1,
-                             IARG_RETURN_IP,
-                             IARG_END);
-        RTN_Close(rtn);
+        cerr << "Replacing realloc in: " << IMG_Name(img) << endl;
+
+        PROTO proto = PROTO_Allocate(
+            PIN_PARG(void *), CALLINGSTD_DEFAULT,
+            "realloc",
+            PIN_PARG(void *),
+            PIN_PARG(size_t),
+            PIN_PARG_END());
+
+        real_realloc = (realloc_t)RTN_ReplaceSignature(
+            reallocRtn, AFUNPTR(MyRealloc),
+            IARG_PROTOTYPE, proto,
+            IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+            IARG_FUNCARG_ENTRYPOINT_VALUE, 1,
+            IARG_RETURN_IP,
+            IARG_END);
+
+        PROTO_Free(proto);
     }
 
-    rtn = RTN_FindByName(img, "realloc");
-    if (RTN_Valid(rtn))
+    /* free */
+    RTN freeRtn = RTN_FindByName(img, "free");
+    if (RTN_Valid(freeRtn))
     {
-        RTN_Open(rtn);
-        RTN_ReplaceSignature(rtn, AFUNPTR(ReallocReplacement),
-                             IARG_ORIG_FUNCPTR,
-                             IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
-                             IARG_FUNCARG_ENTRYPOINT_VALUE, 1,
-                             IARG_RETURN_IP,
-                             IARG_END);
-        RTN_Close(rtn);
+        cerr << "Replacing free in: " << IMG_Name(img) << endl;
+
+        PROTO proto = PROTO_Allocate(
+            PIN_PARG(void), CALLINGSTD_DEFAULT,
+            "free",
+            PIN_PARG(void *),
+            PIN_PARG_END());
+
+        real_free = (free_t)RTN_ReplaceSignature(
+            freeRtn, AFUNPTR(MyFree),
+            IARG_PROTOTYPE, proto,
+            IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+            IARG_END);
+
+        PROTO_Free(proto);
     }
 }
 
-/* ===================================================================== */
-// Final report
-/* ===================================================================== */
+/* ============================================================ */
+// FINAL REPORT
+/* ============================================================ */
 
 VOID Fini(INT32 code, VOID *v)
 {
-    std::ostream &os = *out;
+    outFile << "\n=========== FINAL REPORT ===========\n";
 
-    os << "===============================================" << std::endl;
-    os << "Memory Allocation Report" << std::endl;
-    os << "===============================================" << std::endl;
-
-    std::vector<std::pair<std::string, FunctionStats>> vec(functionStats.begin(), functionStats.end());
-    std::sort(vec.begin(), vec.end(),
-              [](const std::pair<std::string, FunctionStats> &a,
-                 const std::pair<std::string, FunctionStats> &b)
-              {
-                  return a.second.bytesAllocated > b.second.bytesAllocated;
-              });
-
-    os << "Per-function allocation summary:" << std::endl;
-    for (size_t i = 0; i < vec.size(); ++i)
+    outFile << "\n-- Allocation Summary Per Function --\n";
+    for (auto &p : totalMemPerFunc)
     {
-        const std::string &name = vec[i].first;
-        const FunctionStats &st = vec[i].second;
-        os << name << " | allocs: " << st.allocCount
-           << " | frees: " << st.freeCount
-           << " | bytes allocated: " << st.bytesAllocated
-           << " | bytes freed: " << st.bytesFreed
-           << " | bytes active: " << (st.bytesAllocated - st.bytesFreed)
-           << std::endl;
+        outFile << "Function: " << p.first
+                << " | Total Bytes: " << p.second
+                << " | Alloc Count: " << allocCountPerFunc[p.first]
+                << endl;
     }
 
-    os << std::endl;
-    os << "Active allocations:" << std::endl;
-    UINT64 activeCount = 0;
-    UINT64 activeBytes = 0;
-
-    for (std::map<ADDRINT, AllocationInfo>::iterator it = allocations.begin(); it != allocations.end(); ++it)
+    outFile << "\n-- Active Allocations (Leaks) --\n";
+    for (auto &p : activeAllocs)
     {
-        if (!it->second.freed)
-        {
-            activeCount++;
-            activeBytes += it->second.size;
-            os << "addr=0x" << std::hex << it->second.addr << std::dec
-               << " size=" << it->second.size
-               << " func=" << it->second.funcName << std::endl;
-        }
+        outFile << "Leaked Addr: " << std::hex << p.first
+                << " Size: " << std::dec << p.second.size
+                << " Func: " << p.second.funcName
+                << endl;
     }
 
-    os << std::endl;
-    os << "Summary:" << std::endl;
-    os << "Total unique allocations tracked: " << allocations.size() << std::endl;
-    os << "Active allocations remaining: " << activeCount << std::endl;
-    os << "Active bytes remaining: " << activeBytes << std::endl;
-    os << "===============================================" << std::endl;
+    outFile << "\n====================================\n";
 }
 
-/* ===================================================================== */
-// Main
-/* ===================================================================== */
+/* ============================================================ */
+// MAIN
+/* ============================================================ */
 
 int main(int argc, char *argv[])
 {
+    PIN_InitSymbols();
+
     if (PIN_Init(argc, argv))
     {
-        return Usage();
+        cerr << "PIN Init failed\n";
+        return -1;
     }
 
     PIN_InitLock(&lock);
 
-    std::string fileName = KnobOutputFile.Value();
-    if (fileName.empty())
+    outFile.open("mem_report.out");
+    if (!outFile.is_open())
     {
-        fileName = "mypintool.out";
-    }
-
-    out = new std::ofstream(fileName.c_str());
-
-    if (!out || !(*out))
-    {
-        std::cerr << "Failed to open output file: " << fileName << std::endl;
-        return 1;
+        cerr << "Error opening output file\n";
+        return -1;
     }
 
     IMG_AddInstrumentFunction(ImageLoad, 0);
     PIN_AddFiniFunction(Fini, 0);
 
-    std::cerr << "===============================================" << std::endl;
-    std::cerr << "This application is instrumented by MyPinTool" << std::endl;
-    if (!KnobOutputFile.Value().empty())
-    {
-        std::cerr << "See file " << KnobOutputFile.Value() << " for analysis results" << std::endl;
-    }
-    std::cerr << "===============================================" << std::endl;
+    cerr << "Running Memory Allocation Pintool...\n";
 
     PIN_StartProgram();
 
     return 0;
 }
-
-/* ===================================================================== */
-/* eof */
-/* ===================================================================== */
