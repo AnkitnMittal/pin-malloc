@@ -120,7 +120,6 @@ VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
 
     PIN_GetLock(&lock, 1);
 
-    // if success → remove old
     if (ret != NULL && ptr != NULL)
     {
         auto it = activeAllocs.find((ADDRINT)ptr);
