@@ -1,14 +1,2 @@
-[ALLOC] Addr: 61cefbe1d2a0 Size: 100 Func: main
-[CALLOC] Addr: 61cefbe1d310 Size: 200 Func: main
-[REALLOC] Addr: 61cefbe1d3e0 Size: 200 Func: main
-[FREE ] Addr: 61cefbe1d3e0 Size: 200 Func: main
-
-=========== FINAL REPORT ===========
-
--- Allocation Summary Per Function --
-Function: main | Total Bytes: 500 | Alloc Count: 3
-
--- Active Allocations (Leaks) --
-Leaked Addr: 61cefbe1d310 Size: 200 Func: main
-
-====================================
+[ALLOC] Addr: 5e2741caf2a0 Size: 100 Func: main
+[FREE ] Addr: 5e2741caf2a0 Size: 100 Func: main

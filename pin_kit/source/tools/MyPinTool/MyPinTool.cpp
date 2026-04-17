@@ -10,21 +10,9 @@ using std::map;
 using std::ofstream;
 using std::string;
 
-/* ============================================================ */
-// OUTPUT
-/* ============================================================ */
-
 ofstream outFile;
 
-/* ============================================================ */
-// THREAD SAFETY
-/* ============================================================ */
-
 PIN_LOCK lock;
-
-/* ============================================================ */
-// DATA STRUCTURES
-/* ============================================================ */
 
 struct AllocInfo
 {
@@ -36,10 +24,6 @@ map<ADDRINT, AllocInfo> activeAllocs;
 map<string, size_t> totalMemPerFunc;
 map<string, size_t> allocCountPerFunc;
 
-/* ============================================================ */
-// ORIGINAL FUNCTION POINTERS
-/* ============================================================ */
-
 typedef VOID *(*malloc_t)(size_t);
 typedef VOID *(*calloc_t)(size_t, size_t);
 typedef VOID *(*realloc_t)(VOID *, size_t);
@@ -49,10 +33,6 @@ malloc_t real_malloc = NULL;
 calloc_t real_calloc = NULL;
 realloc_t real_realloc = NULL;
 free_t real_free = NULL;
-
-/* ============================================================ */
-// UTILITY
-/* ============================================================ */
 
 string GetFuncName(ADDRINT ip)
 {
@@ -64,10 +44,6 @@ string GetFuncName(ADDRINT ip)
     PIN_UnlockClient();
     return name;
 }
-
-/* ============================================================ */
-// WRAPPERS
-/* ============================================================ */
 
 VOID *MyMalloc(size_t size, ADDRINT ip)
 {
@@ -164,15 +140,10 @@ VOID MyFree(VOID *ptr)
     real_free(ptr);
 }
 
-/* ============================================================ */
-// IMAGE LOAD
-/* ============================================================ */
-
 VOID ImageLoad(IMG img, VOID *v)
 {
     cerr << "Loaded Image: " << IMG_Name(img) << endl;
 
-    /* malloc */
     RTN mallocRtn = RTN_FindByName(img, "malloc");
     if (RTN_Valid(mallocRtn))
     {
@@ -194,7 +165,6 @@ VOID ImageLoad(IMG img, VOID *v)
         PROTO_Free(proto);
     }
 
-    /* calloc */
     RTN callocRtn = RTN_FindByName(img, "calloc");
     if (!RTN_Valid(callocRtn))
         callocRtn = RTN_FindByName(img, "__libc_calloc");
@@ -221,7 +191,6 @@ VOID ImageLoad(IMG img, VOID *v)
         PROTO_Free(proto);
     }
 
-    /* realloc */
     RTN reallocRtn = RTN_FindByName(img, "realloc");
     if (RTN_Valid(reallocRtn))
     {
@@ -245,7 +214,6 @@ VOID ImageLoad(IMG img, VOID *v)
         PROTO_Free(proto);
     }
 
-    /* free */
     RTN freeRtn = RTN_FindByName(img, "free");
     if (RTN_Valid(freeRtn))
     {
@@ -266,10 +234,6 @@ VOID ImageLoad(IMG img, VOID *v)
         PROTO_Free(proto);
     }
 }
-
-/* ============================================================ */
-// FINAL REPORT
-/* ============================================================ */
 
 VOID Fini(INT32 code, VOID *v)
 {
@@ -295,10 +259,6 @@ VOID Fini(INT32 code, VOID *v)
 
     outFile << "\n====================================\n";
 }
-
-/* ============================================================ */
-// MAIN
-/* ============================================================ */
 
 int main(int argc, char *argv[])
 {
