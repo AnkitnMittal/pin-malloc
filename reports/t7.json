@@ -1,0 +1,38 @@
+{
+  "summary": {
+    "total_allocations": 2,
+    "total_frees": 0,
+    "total_bytes_allocated": 160,
+    "total_leaks": 1
+  },
+  "allocations": [
+    {
+      "type": "ALLOC",
+      "address": "5e735855c2a0",
+      "size": 32,
+      "function": "main"
+    },
+    {
+      "type": "REALLOC",
+      "address": "5e735855c2a0",
+      "size": 128,
+      "function": "main"
+    }
+  ],
+  "frees": [
+  ],
+  "leaks": [
+    {
+      "address": "5e735855c2a0",
+      "size": 128,
+      "function": "main"
+    }
+  ],
+  "function_stats": [
+    {
+      "function": "main",
+      "total_bytes": 160,
+      "alloc_count": 2
+    }
+  ]
+}

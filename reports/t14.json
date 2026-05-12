@@ -2,14 +2,14 @@
   "summary": {
     "total_allocations": 1,
     "total_frees": 0,
-    "total_bytes_allocated": 256,
+    "total_bytes_allocated": 4000,
     "total_leaks": 1
   },
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "59c2caca52a0",
-      "size": 256,
+      "address": "5704f0e5a2a0",
+      "size": 4000,
       "function": "main"
     }
   ],
@@ -17,15 +17,15 @@
   ],
   "leaks": [
     {
-      "address": "59c2caca52a0",
-      "size": 256,
+      "address": "5704f0e5a2a0",
+      "size": 4000,
       "function": "main"
     }
   ],
   "function_stats": [
     {
       "function": "main",
-      "total_bytes": 256,
+      "total_bytes": 4000,
       "alloc_count": 1
     }
   ]

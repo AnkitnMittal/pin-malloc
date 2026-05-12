@@ -1,47 +1,59 @@
 {
   "summary": {
-    "total_allocations": 3,
-    "total_frees": 3,
-    "total_bytes_allocated": 448,
+    "total_allocations": 4,
+    "total_frees": 4,
+    "total_bytes_allocated": 548,
     "total_leaks": 0
   },
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "631690e212a0",
+      "address": "5d4e440d72a0",
       "size": 64,
       "function": "main"
     },
     {
       "type": "ALLOC",
-      "address": "631690e212f0",
+      "address": "5d4e440d72f0",
       "size": 128,
       "function": "main"
     },
     {
       "type": "ALLOC",
-      "address": "631690e21380",
+      "address": "5d4e440d7380",
       "size": 256,
+      "function": "main"
+    },
+    {
+      "type": "ALLOC",
+      "address": "5d4e440d7490",
+      "size": 100,
       "function": "main"
     }
   ],
   "frees": [
     {
       "type": "FREE",
-      "address": "631690e212a0",
-      "size": 64,
-      "function": "main"
-    },
-    {
-      "type": "FREE",
-      "address": "631690e212f0",
+      "address": "5d4e440d72f0",
       "size": 128,
       "function": "main"
     },
     {
       "type": "FREE",
-      "address": "631690e21380",
+      "address": "5d4e440d72a0",
+      "size": 64,
+      "function": "main"
+    },
+    {
+      "type": "FREE",
+      "address": "5d4e440d7380",
       "size": 256,
+      "function": "main"
+    },
+    {
+      "type": "FREE",
+      "address": "5d4e440d7490",
+      "size": 100,
       "function": "main"
     }
   ],
@@ -50,8 +62,8 @@
   "function_stats": [
     {
       "function": "main",
-      "total_bytes": 448,
-      "alloc_count": 3
+      "total_bytes": 548,
+      "alloc_count": 4
     }
   ]
 }

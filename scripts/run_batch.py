@@ -15,8 +15,8 @@ TESTS_DIR = PROJECT_ROOT / "tests"
 BIN_DIR = TESTS_DIR / "bin"
 REPORTS_DIR = PROJECT_ROOT / "reports"
 
-BIN_DIR.mkdir(exist_ok=True)
-REPORTS_DIR.mkdir(exist_ok=True)
+BIN_DIR.mkdir(parents=True, exist_ok=True)
+REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 cpp_files = list(TESTS_DIR.glob("*.cpp"))
 

@@ -1,14 +1,20 @@
 {
   "summary": {
-    "total_allocations": 1,
+    "total_allocations": 2,
     "total_frees": 1,
-    "total_bytes_allocated": 100,
+    "total_bytes_allocated": 110,
     "total_leaks": 0
   },
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "57422dc8c2a0",
+      "address": "5c9e46d0c2a0",
+      "size": 10,
+      "function": "main"
+    },
+    {
+      "type": "REALLOC",
+      "address": "5c9e46d0c2a0",
       "size": 100,
       "function": "main"
     }
@@ -16,7 +22,7 @@
   "frees": [
     {
       "type": "FREE",
-      "address": "57422dc8c2a0",
+      "address": "5c9e46d0c2a0",
       "size": 100,
       "function": "main"
     }
@@ -26,8 +32,8 @@
   "function_stats": [
     {
       "function": "main",
-      "total_bytes": 100,
-      "alloc_count": 1
+      "total_bytes": 110,
+      "alloc_count": 2
     }
   ]
 }
