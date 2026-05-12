@@ -1,18 +1,30 @@
 #include "pin.H"
+
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <vector>
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 using std::cerr;
 using std::endl;
 using std::map;
 using std::ofstream;
 using std::string;
+using std::vector;
 
 ofstream outFile;
 
 PIN_LOCK lock;
+
+KNOB<string> KnobOutputFile(
+    KNOB_MODE_WRITEONCE,
+    "pintool",
+    "o",
+    "mem_report.json",
+    "output file");
 
 struct AllocInfo
 {
@@ -20,9 +32,24 @@ struct AllocInfo
     string funcName;
 };
 
+struct TraceEvent
+{
+    string type;
+    ADDRINT address;
+    size_t size;
+    string function;
+};
+
 map<ADDRINT, AllocInfo> activeAllocs;
 map<string, size_t> totalMemPerFunc;
 map<string, size_t> allocCountPerFunc;
+
+vector<TraceEvent> allocEvents;
+vector<TraceEvent> freeEvents;
+
+UINT64 totalAllocations = 0;
+UINT64 totalFrees = 0;
+UINT64 totalBytesAllocated = 0;
 
 typedef VOID *(*malloc_t)(size_t);
 typedef VOID *(*calloc_t)(size_t, size_t);
@@ -51,7 +78,8 @@ VOID *MyMalloc(size_t size, ADDRINT ip)
     if (!ret)
         return ret;
 
-    PIN_GetLock(&lock, 1);
+    THREADID tid = PIN_ThreadId();
+    PIN_GetLock(&lock, tid + 1);
 
     string func = GetFuncName(ip);
 
@@ -59,9 +87,15 @@ VOID *MyMalloc(size_t size, ADDRINT ip)
     totalMemPerFunc[func] += size;
     allocCountPerFunc[func]++;
 
-    outFile << "[ALLOC] Addr: " << std::hex << (ADDRINT)ret
-            << " Size: " << std::dec << size
-            << " Func: " << func << endl;
+    totalAllocations++;
+    totalBytesAllocated += size;
+
+    TraceEvent ev;
+    ev.type = "ALLOC";
+    ev.address = (ADDRINT)ret;
+    ev.size = size;
+    ev.function = func;
+    allocEvents.push_back(ev);
 
     PIN_ReleaseLock(&lock);
     return ret;
@@ -73,7 +107,8 @@ VOID *MyCalloc(size_t nmemb, size_t size, ADDRINT ip)
     if (!ret)
         return ret;
 
-    PIN_GetLock(&lock, 1);
+    THREADID tid = PIN_ThreadId();
+    PIN_GetLock(&lock, tid + 1);
 
     size_t total = nmemb * size;
     string func = GetFuncName(ip);
@@ -82,9 +117,15 @@ VOID *MyCalloc(size_t nmemb, size_t size, ADDRINT ip)
     totalMemPerFunc[func] += total;
     allocCountPerFunc[func]++;
 
-    outFile << "[CALLOC] Addr: " << std::hex << (ADDRINT)ret
-            << " Size: " << std::dec << total
-            << " Func: " << func << endl;
+    totalAllocations++;
+    totalBytesAllocated += total;
+
+    TraceEvent ev;
+    ev.type = "CALLOC";
+    ev.address = (ADDRINT)ret;
+    ev.size = total;
+    ev.function = func;
+    allocEvents.push_back(ev);
 
     PIN_ReleaseLock(&lock);
     return ret;
@@ -94,9 +135,10 @@ VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
 {
     VOID *ret = real_realloc(ptr, size);
 
-    PIN_GetLock(&lock, 1);
+    THREADID tid = PIN_ThreadId();
+    PIN_GetLock(&lock, tid + 1);
 
-    if (ret != NULL && ptr != NULL)
+    if (ptr != NULL)
     {
         auto it = activeAllocs.find((ADDRINT)ptr);
         if (it != activeAllocs.end())
@@ -111,9 +153,15 @@ VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
         totalMemPerFunc[func] += size;
         allocCountPerFunc[func]++;
 
-        outFile << "[REALLOC] Addr: " << std::hex << (ADDRINT)ret
-                << " Size: " << std::dec << size
-                << " Func: " << func << endl;
+        totalAllocations++;
+        totalBytesAllocated += size;
+
+        TraceEvent ev;
+        ev.type = "REALLOC";
+        ev.address = (ADDRINT)ret;
+        ev.size = size;
+        ev.function = func;
+        allocEvents.push_back(ev);
     }
 
     PIN_ReleaseLock(&lock);
@@ -122,22 +170,128 @@ VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
 
 VOID MyFree(VOID *ptr)
 {
-    PIN_GetLock(&lock, 1);
+    THREADID tid = PIN_ThreadId();
+    PIN_GetLock(&lock, tid + 1);
 
     auto it = activeAllocs.find((ADDRINT)ptr);
 
     if (it != activeAllocs.end())
     {
-        outFile << "[FREE ] Addr: " << std::hex << (ADDRINT)ptr
-                << " Size: " << std::dec << it->second.size
-                << " Func: " << it->second.funcName << endl;
+        totalFrees++;
+
+        TraceEvent ev;
+        ev.type = "FREE";
+        ev.address = (ADDRINT)ptr;
+        ev.size = it->second.size;
+        ev.function = it->second.funcName;
+        freeEvents.push_back(ev);
 
         activeAllocs.erase(it);
     }
 
     PIN_ReleaseLock(&lock);
-
     real_free(ptr);
+}
+
+VOID WriteJSONReport()
+{
+    outFile << "{\n";
+
+    outFile << "  \"summary\": {\n";
+    outFile << "    \"total_allocations\": " << totalAllocations << ",\n";
+    outFile << "    \"total_frees\": " << totalFrees << ",\n";
+    outFile << "    \"total_bytes_allocated\": " << totalBytesAllocated << ",\n";
+    outFile << "    \"total_leaks\": " << activeAllocs.size() << "\n";
+    outFile << "  },\n";
+
+    outFile << "  \"allocations\": [\n";
+
+    for (size_t i = 0; i < allocEvents.size(); i++)
+    {
+        auto &e = allocEvents[i];
+
+        outFile << "    {\n";
+        outFile << "      \"type\": \"" << e.type << "\",\n";
+        outFile << "      \"address\": \"" << std::hex << e.address << "\",\n";
+        outFile << "      \"size\": " << std::dec << e.size << ",\n";
+        outFile << "      \"function\": \"" << e.function << "\"\n";
+        outFile << "    }";
+
+        if (i != allocEvents.size() - 1)
+            outFile << ",";
+
+        outFile << "\n";
+    }
+
+    outFile << "  ],\n";
+
+    outFile << "  \"frees\": [\n";
+
+    for (size_t i = 0; i < freeEvents.size(); i++)
+    {
+        auto &e = freeEvents[i];
+
+        outFile << "    {\n";
+        outFile << "      \"type\": \"" << e.type << "\",\n";
+        outFile << "      \"address\": \"" << std::hex << e.address << "\",\n";
+        outFile << "      \"size\": " << std::dec << e.size << ",\n";
+        outFile << "      \"function\": \"" << e.function << "\"\n";
+        outFile << "    }";
+
+        if (i != freeEvents.size() - 1)
+            outFile << ",";
+
+        outFile << "\n";
+    }
+
+    outFile << "  ],\n";
+
+    outFile << "  \"leaks\": [\n";
+
+    size_t leakIndex = 0;
+
+    for (auto &p : activeAllocs)
+    {
+        outFile << "    {\n";
+        outFile << "      \"address\": \"" << std::hex << p.first << "\",\n";
+        outFile << "      \"size\": " << std::dec << p.second.size << ",\n";
+        outFile << "      \"function\": \"" << p.second.funcName << "\"\n";
+        outFile << "    }";
+
+        leakIndex++;
+
+        if (leakIndex != activeAllocs.size())
+            outFile << ",";
+
+        outFile << "\n";
+    }
+
+    outFile << "  ],\n";
+
+    outFile << "  \"function_stats\": [\n";
+
+    size_t funcIndex = 0;
+
+    for (auto &p : totalMemPerFunc)
+    {
+        outFile << "    {\n";
+        outFile << "      \"function\": \"" << p.first << "\",\n";
+        outFile << "      \"total_bytes\": " << p.second << ",\n";
+        outFile << "      \"alloc_count\": "
+                << allocCountPerFunc[p.first] << "\n";
+        outFile << "    }";
+
+        funcIndex++;
+
+        if (funcIndex != totalMemPerFunc.size())
+            outFile << ",";
+
+        outFile << "\n";
+    }
+
+    outFile << "  ]\n";
+
+    outFile << "}\n";
 }
 
 VOID ImageLoad(IMG img, VOID *v)
@@ -147,8 +301,6 @@ VOID ImageLoad(IMG img, VOID *v)
     RTN mallocRtn = RTN_FindByName(img, "malloc");
     if (RTN_Valid(mallocRtn))
     {
-        cerr << "Replacing malloc in: " << IMG_Name(img) << endl;
-
         PROTO proto = PROTO_Allocate(
             PIN_PARG(void *), CALLINGSTD_DEFAULT,
             "malloc",
@@ -171,8 +323,6 @@ VOID ImageLoad(IMG img, VOID *v)
 
     if (RTN_Valid(callocRtn))
     {
-        cerr << "Replacing calloc in: " << IMG_Name(img) << endl;
-
         PROTO proto = PROTO_Allocate(
             PIN_PARG(void *), CALLINGSTD_DEFAULT,
             "calloc",
@@ -194,8 +344,6 @@ VOID ImageLoad(IMG img, VOID *v)
     RTN reallocRtn = RTN_FindByName(img, "realloc");
     if (RTN_Valid(reallocRtn))
     {
-        cerr << "Replacing realloc in: " << IMG_Name(img) << endl;
-
         PROTO proto = PROTO_Allocate(
             PIN_PARG(void *), CALLINGSTD_DEFAULT,
             "realloc",
@@ -217,8 +365,6 @@ VOID ImageLoad(IMG img, VOID *v)
     RTN freeRtn = RTN_FindByName(img, "free");
     if (RTN_Valid(freeRtn))
     {
-        cerr << "Replacing free in: " << IMG_Name(img) << endl;
-
         PROTO proto = PROTO_Allocate(
             PIN_PARG(void), CALLINGSTD_DEFAULT,
             "free",
@@ -237,27 +383,10 @@ VOID ImageLoad(IMG img, VOID *v)
 
 VOID Fini(INT32 code, VOID *v)
 {
-    outFile << "\n=========== FINAL REPORT ===========\n";
+    WriteJSONReport();
 
-    outFile << "\n-- Allocation Summary Per Function --\n";
-    for (auto &p : totalMemPerFunc)
-    {
-        outFile << "Function: " << p.first
-                << " | Total Bytes: " << p.second
-                << " | Alloc Count: " << allocCountPerFunc[p.first]
-                << endl;
-    }
-
-    outFile << "\n-- Active Allocations (Leaks) --\n";
-    for (auto &p : activeAllocs)
-    {
-        outFile << "Leaked Addr: " << std::hex << p.first
-                << " Size: " << std::dec << p.second.size
-                << " Func: " << p.second.funcName
-                << endl;
-    }
-
-    outFile << "\n====================================\n";
+    outFile.close();
+    cerr << "JSON memory report generated successfully.\n";
 }
 
 int main(int argc, char *argv[])
@@ -272,7 +401,7 @@ int main(int argc, char *argv[])
 
     PIN_InitLock(&lock);
 
-    outFile.open("mem_report.out");
+    outFile.open(KnobOutputFile.Value().c_str());
     if (!outFile.is_open())
     {
         cerr << "Error opening output file\n";

@@ -1,0 +1,50 @@
+{
+  "summary": {
+    "total_allocations": 3,
+    "total_frees": 1,
+    "total_bytes_allocated": 500,
+    "total_leaks": 1
+  },
+  "allocations": [
+    {
+      "type": "ALLOC",
+      "address": "6023188f52a0",
+      "size": 100,
+      "function": "main"
+    },
+    {
+      "type": "CALLOC",
+      "address": "6023188f5310",
+      "size": 200,
+      "function": "main"
+    },
+    {
+      "type": "REALLOC",
+      "address": "6023188f53e0",
+      "size": 200,
+      "function": "main"
+    }
+  ],
+  "frees": [
+    {
+      "type": "FREE",
+      "address": "6023188f53e0",
+      "size": 200,
+      "function": "main"
+    }
+  ],
+  "leaks": [
+    {
+      "address": "6023188f5310",
+      "size": 200,
+      "function": "main"
+    }
+  ],
+  "function_stats": [
+    {
+      "function": "main",
+      "total_bytes": 500,
+      "alloc_count": 3
+    }
+  ]
+}
