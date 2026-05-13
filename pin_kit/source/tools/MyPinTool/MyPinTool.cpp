@@ -30,6 +30,8 @@ struct AllocInfo
 {
     size_t size;
     string funcName;
+    string file;
+    INT32 line;
 };
 
 struct TraceEvent
@@ -38,6 +40,8 @@ struct TraceEvent
     ADDRINT address;
     size_t size;
     string function;
+    string file;
+    INT32 line;
 };
 
 map<ADDRINT, AllocInfo> activeAllocs;
@@ -61,6 +65,26 @@ calloc_t real_calloc = NULL;
 realloc_t real_realloc = NULL;
 free_t real_free = NULL;
 
+VOID GetSourceInfo(ADDRINT ip, string &file, INT32 &line)
+{
+    PIN_LockClient();
+
+    INT32 column;
+    PIN_GetSourceLocation(
+        ip,
+        &column,
+        &line,
+        &file);
+
+    PIN_UnlockClient();
+
+    if (file.empty())
+    {
+        file = "UNKNOWN";
+        line = -1;
+    }
+}
+
 string GetFuncName(ADDRINT ip)
 {
     PIN_LockClient();
@@ -82,8 +106,11 @@ VOID *MyMalloc(size_t size, ADDRINT ip)
     PIN_GetLock(&lock, tid + 1);
 
     string func = GetFuncName(ip);
+    string file;
+    INT32 line;
+    GetSourceInfo(ip, file, line);
 
-    activeAllocs[(ADDRINT)ret] = {size, func};
+    activeAllocs[(ADDRINT)ret] = {size, func, file, line};
     totalMemPerFunc[func] += size;
     allocCountPerFunc[func]++;
 
@@ -95,6 +122,8 @@ VOID *MyMalloc(size_t size, ADDRINT ip)
     ev.address = (ADDRINT)ret;
     ev.size = size;
     ev.function = func;
+    ev.file = file;
+    ev.line = line;
     allocEvents.push_back(ev);
 
     PIN_ReleaseLock(&lock);
@@ -112,8 +141,11 @@ VOID *MyCalloc(size_t nmemb, size_t size, ADDRINT ip)
 
     size_t total = nmemb * size;
     string func = GetFuncName(ip);
+    string file;
+    INT32 line;
+    GetSourceInfo(ip, file, line);
 
-    activeAllocs[(ADDRINT)ret] = {total, func};
+    activeAllocs[(ADDRINT)ret] = {total, func, file, line};
     totalMemPerFunc[func] += total;
     allocCountPerFunc[func]++;
 
@@ -125,6 +157,8 @@ VOID *MyCalloc(size_t nmemb, size_t size, ADDRINT ip)
     ev.address = (ADDRINT)ret;
     ev.size = total;
     ev.function = func;
+    ev.file = file;
+    ev.line = line;
     allocEvents.push_back(ev);
 
     PIN_ReleaseLock(&lock);
@@ -148,8 +182,11 @@ VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
     if (ret != NULL)
     {
         string func = GetFuncName(ip);
+        string file;
+        INT32 line;
+        GetSourceInfo(ip, file, line);
 
-        activeAllocs[(ADDRINT)ret] = {size, func};
+        activeAllocs[(ADDRINT)ret] = {size, func, file, line};
         totalMemPerFunc[func] += size;
         allocCountPerFunc[func]++;
 
@@ -161,6 +198,8 @@ VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
         ev.address = (ADDRINT)ret;
         ev.size = size;
         ev.function = func;
+        ev.file = file;
+        ev.line = line;
         allocEvents.push_back(ev);
     }
 
@@ -184,6 +223,8 @@ VOID MyFree(VOID *ptr)
         ev.address = (ADDRINT)ptr;
         ev.size = it->second.size;
         ev.function = it->second.funcName;
+        ev.file = it->second.file;
+        ev.line = it->second.line;
         freeEvents.push_back(ev);
 
         activeAllocs.erase(it);
@@ -215,6 +256,8 @@ VOID WriteJSONReport()
         outFile << "      \"address\": \"" << std::hex << e.address << "\",\n";
         outFile << "      \"size\": " << std::dec << e.size << ",\n";
         outFile << "      \"function\": \"" << e.function << "\"\n";
+        outFile << "      \"file\": \"" << e.file << "\",\n";
+        outFile << "      \"line\": " << e.line << "\n";
         outFile << "    }";
 
         if (i != allocEvents.size() - 1)
@@ -236,6 +279,8 @@ VOID WriteJSONReport()
         outFile << "      \"address\": \"" << std::hex << e.address << "\",\n";
         outFile << "      \"size\": " << std::dec << e.size << ",\n";
         outFile << "      \"function\": \"" << e.function << "\"\n";
+        outFile << "      \"file\": \"" << e.file << "\",\n";
+        outFile << "      \"line\": " << e.line << "\n";
         outFile << "    }";
 
         if (i != freeEvents.size() - 1)
@@ -256,6 +301,8 @@ VOID WriteJSONReport()
         outFile << "      \"address\": \"" << std::hex << p.first << "\",\n";
         outFile << "      \"size\": " << std::dec << p.second.size << ",\n";
         outFile << "      \"function\": \"" << p.second.funcName << "\"\n";
+        outFile << "      \"file\": \"" << p.second.file << "\",\n";
+        outFile << "      \"line\": " << p.second.line << "\n";
         outFile << "    }";
 
         leakIndex++;
@@ -277,8 +324,7 @@ VOID WriteJSONReport()
         outFile << "    {\n";
         outFile << "      \"function\": \"" << p.first << "\",\n";
         outFile << "      \"total_bytes\": " << p.second << ",\n";
-        outFile << "      \"alloc_count\": "
-                << allocCountPerFunc[p.first] << "\n";
+        outFile << "      \"alloc_count\": " << allocCountPerFunc[p.first] << "\n";
         outFile << "    }";
 
         funcIndex++;
