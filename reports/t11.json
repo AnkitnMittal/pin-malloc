@@ -8,17 +8,21 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "7e9bce76b010",
+      "address": "72f8fbd6b010",
       "size": 52428800,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t11.cpp",
+      "line": 5
     }
   ],
   "frees": [
     {
       "type": "FREE",
-      "address": "7e9bce76b010",
+      "address": "72f8fbd6b010",
       "size": 52428800,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t11.cpp",
+      "line": 5
     }
   ],
   "leaks": [

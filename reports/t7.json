@@ -8,24 +8,30 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "597e65f082a0",
+      "address": "5dbdabae22a0",
       "size": 32,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t7.cpp",
+      "line": 5
     },
     {
       "type": "REALLOC",
-      "address": "597e65f082a0",
+      "address": "5dbdabae22a0",
       "size": 128,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t7.cpp",
+      "line": 6
     }
   ],
   "frees": [
   ],
   "leaks": [
     {
-      "address": "597e65f082a0",
+      "address": "5dbdabae22a0",
       "size": 128,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t7.cpp",
+      "line": 6
     }
   ],
   "function_stats": [

@@ -8,53 +8,69 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "59a46ff9c2a0",
+      "address": "5e51cbf562a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t12.cpp",
+      "line": 5
     },
     {
       "type": "ALLOC",
-      "address": "59a46ff9c2f0",
+      "address": "5e51cbf562f0",
       "size": 128,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t12.cpp",
+      "line": 6
     },
     {
       "type": "ALLOC",
-      "address": "59a46ff9c380",
+      "address": "5e51cbf56380",
       "size": 256,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t12.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59a46ff9c490",
+      "address": "5e51cbf56490",
       "size": 100,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t12.cpp",
+      "line": 11
     }
   ],
   "frees": [
     {
       "type": "FREE",
-      "address": "59a46ff9c2f0",
+      "address": "5e51cbf562f0",
       "size": 128,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t12.cpp",
+      "line": 6
     },
     {
       "type": "FREE",
-      "address": "59a46ff9c2a0",
+      "address": "5e51cbf562a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t12.cpp",
+      "line": 5
     },
     {
       "type": "FREE",
-      "address": "59a46ff9c380",
+      "address": "5e51cbf56380",
       "size": 256,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t12.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59a46ff9c490",
+      "address": "5e51cbf56490",
       "size": 100,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t12.cpp",
+      "line": 11
     }
   ],
   "leaks": [

@@ -37,6 +37,7 @@ for cpp_file in cpp_files:
 
     compile_cmd = [
         "g++",
+        "-g",
         str(cpp_file),
         "-o",
         str(binary_path)

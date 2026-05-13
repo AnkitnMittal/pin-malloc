@@ -2,16 +2,16 @@
   "summary": {
     "total_allocations": 1,
     "total_frees": 0,
-    "total_bytes_allocated": 4000,
+    "total_bytes_allocated": 64,
     "total_leaks": 1
   },
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "653ad47732a0",
-      "size": 4000,
+      "address": "569c5652b2a0",
+      "size": 64,
       "function": "main",
-      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t14.cpp",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/leak.cpp",
       "line": 5
     }
   ],
@@ -19,17 +19,17 @@
   ],
   "leaks": [
     {
-      "address": "653ad47732a0",
-      "size": 4000,
+      "address": "569c5652b2a0",
+      "size": 64,
       "function": "main",
-      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t14.cpp",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/leak.cpp",
       "line": 5
     }
   ],
   "function_stats": [
     {
       "function": "main",
-      "total_bytes": 4000,
+      "total_bytes": 64,
       "alloc_count": 1
     }
   ]

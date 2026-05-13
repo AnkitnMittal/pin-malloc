@@ -85,6 +85,14 @@ VOID GetSourceInfo(ADDRINT ip, string &file, INT32 &line)
     }
 }
 
+bool IsUserCode(const string &file)
+{
+    if (file == "UNKNOWN")
+        return false;
+
+    return file.find("/tests/") != string::npos;
+}
+
 string GetFuncName(ADDRINT ip)
 {
     PIN_LockClient();
@@ -109,6 +117,12 @@ VOID *MyMalloc(size_t size, ADDRINT ip)
     string file;
     INT32 line;
     GetSourceInfo(ip, file, line);
+
+    if (!IsUserCode(file))
+    {
+        PIN_ReleaseLock(&lock);
+        return ret;
+    }
 
     activeAllocs[(ADDRINT)ret] = {size, func, file, line};
     totalMemPerFunc[func] += size;
@@ -145,6 +159,12 @@ VOID *MyCalloc(size_t nmemb, size_t size, ADDRINT ip)
     INT32 line;
     GetSourceInfo(ip, file, line);
 
+    if (!IsUserCode(file))
+    {
+        PIN_ReleaseLock(&lock);
+        return ret;
+    }
+
     activeAllocs[(ADDRINT)ret] = {total, func, file, line};
     totalMemPerFunc[func] += total;
     allocCountPerFunc[func]++;
@@ -172,6 +192,12 @@ VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
     THREADID tid = PIN_ThreadId();
     PIN_GetLock(&lock, tid + 1);
 
+    if (ret == NULL)
+    {
+        PIN_ReleaseLock(&lock);
+        return ret;
+    }
+
     if (ptr != NULL)
     {
         auto it = activeAllocs.find((ADDRINT)ptr);
@@ -185,6 +211,12 @@ VOID *MyRealloc(VOID *ptr, size_t size, ADDRINT ip)
         string file;
         INT32 line;
         GetSourceInfo(ip, file, line);
+
+        if (!IsUserCode(file))
+        {
+            PIN_ReleaseLock(&lock);
+            return ret;
+        }
 
         activeAllocs[(ADDRINT)ret] = {size, func, file, line};
         totalMemPerFunc[func] += size;
@@ -255,7 +287,7 @@ VOID WriteJSONReport()
         outFile << "      \"type\": \"" << e.type << "\",\n";
         outFile << "      \"address\": \"" << std::hex << e.address << "\",\n";
         outFile << "      \"size\": " << std::dec << e.size << ",\n";
-        outFile << "      \"function\": \"" << e.function << "\"\n";
+        outFile << "      \"function\": \"" << e.function << "\",\n";
         outFile << "      \"file\": \"" << e.file << "\",\n";
         outFile << "      \"line\": " << e.line << "\n";
         outFile << "    }";
@@ -278,7 +310,7 @@ VOID WriteJSONReport()
         outFile << "      \"type\": \"" << e.type << "\",\n";
         outFile << "      \"address\": \"" << std::hex << e.address << "\",\n";
         outFile << "      \"size\": " << std::dec << e.size << ",\n";
-        outFile << "      \"function\": \"" << e.function << "\"\n";
+        outFile << "      \"function\": \"" << e.function << "\",\n";
         outFile << "      \"file\": \"" << e.file << "\",\n";
         outFile << "      \"line\": " << e.line << "\n";
         outFile << "    }";
@@ -300,7 +332,7 @@ VOID WriteJSONReport()
         outFile << "    {\n";
         outFile << "      \"address\": \"" << std::hex << p.first << "\",\n";
         outFile << "      \"size\": " << std::dec << p.second.size << ",\n";
-        outFile << "      \"function\": \"" << p.second.funcName << "\"\n";
+        outFile << "      \"function\": \"" << p.second.funcName << "\",\n";
         outFile << "      \"file\": \"" << p.second.file << "\",\n";
         outFile << "      \"line\": " << p.second.line << "\n";
         outFile << "    }";

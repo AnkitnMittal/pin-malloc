@@ -8,1205 +8,1605 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "ALLOC",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     }
   ],
   "frees": [
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     },
     {
       "type": "FREE",
-      "address": "59688eff72a0",
+      "address": "5c027d5172a0",
       "size": 64,
-      "function": "main"
+      "function": "main",
+      "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t8.cpp",
+      "line": 7
     }
   ],
   "leaks": [
