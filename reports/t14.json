@@ -8,7 +8,7 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "574cadae12a0",
+      "address": "5bde669e52a0",
       "size": 4000,
       "function": "main"
     }
@@ -17,7 +17,7 @@
   ],
   "leaks": [
     {
-      "address": "574cadae12a0",
+      "address": "5bde669e52a0",
       "size": 4000,
       "function": "main"
     }
