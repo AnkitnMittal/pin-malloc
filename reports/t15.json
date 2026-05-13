@@ -8,19 +8,19 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "59cc4e2442a0",
+      "address": "611917b052a0",
       "size": 100,
       "function": "main"
     },
     {
       "type": "ALLOC",
-      "address": "59cc4e244310",
+      "address": "611917b05310",
       "size": 200,
       "function": "main"
     },
     {
       "type": "ALLOC",
-      "address": "59cc4e2443e0",
+      "address": "611917b053e0",
       "size": 300,
       "function": "main"
     }
@@ -29,17 +29,17 @@
   ],
   "leaks": [
     {
-      "address": "59cc4e2442a0",
+      "address": "611917b052a0",
       "size": 100,
       "function": "main"
     },
     {
-      "address": "59cc4e244310",
+      "address": "611917b05310",
       "size": 200,
       "function": "main"
     },
     {
-      "address": "59cc4e2443e0",
+      "address": "611917b053e0",
       "size": 300,
       "function": "main"
     }

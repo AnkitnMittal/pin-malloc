@@ -8,19 +8,19 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "60fd101442a0",
+      "address": "588904f052a0",
       "size": 100,
       "function": "main"
     },
     {
       "type": "CALLOC",
-      "address": "60fd10144310",
+      "address": "588904f05310",
       "size": 160,
       "function": "main"
     },
     {
       "type": "REALLOC",
-      "address": "60fd101443c0",
+      "address": "588904f053c0",
       "size": 500,
       "function": "main"
     }
@@ -28,13 +28,13 @@
   "frees": [
     {
       "type": "FREE",
-      "address": "60fd101443c0",
+      "address": "588904f053c0",
       "size": 500,
       "function": "main"
     },
     {
       "type": "FREE",
-      "address": "60fd10144310",
+      "address": "588904f05310",
       "size": 160,
       "function": "main"
     }

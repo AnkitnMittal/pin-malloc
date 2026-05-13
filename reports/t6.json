@@ -8,13 +8,13 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "595bccf8c2a0",
+      "address": "5faaba6732a0",
       "size": 10,
       "function": "main"
     },
     {
       "type": "REALLOC",
-      "address": "595bccf8c2a0",
+      "address": "5faaba6732a0",
       "size": 100,
       "function": "main"
     }
@@ -22,7 +22,7 @@
   "frees": [
     {
       "type": "FREE",
-      "address": "595bccf8c2a0",
+      "address": "5faaba6732a0",
       "size": 100,
       "function": "main"
     }
