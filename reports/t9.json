@@ -8,7 +8,7 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "5c190cc7a2a0",
+      "address": "5741344f52a0",
       "size": 100,
       "function": "_Z3foov",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t9.cpp",
@@ -16,7 +16,7 @@
     },
     {
       "type": "ALLOC",
-      "address": "5c190cc7a310",
+      "address": "5741344f5310",
       "size": 50,
       "function": "_Z3barv",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t9.cpp",
@@ -26,7 +26,7 @@
   "frees": [
     {
       "type": "FREE",
-      "address": "5c190cc7a310",
+      "address": "5741344f5310",
       "size": 50,
       "function": "_Z3barv",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t9.cpp",
@@ -35,7 +35,7 @@
   ],
   "leaks": [
     {
-      "address": "5c190cc7a2a0",
+      "address": "5741344f52a0",
       "size": 100,
       "function": "_Z3foov",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t9.cpp",
