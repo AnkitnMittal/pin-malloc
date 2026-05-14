@@ -8,7 +8,7 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "57d407b782a0",
+      "address": "62ff5095c2a0",
       "size": 64,
       "function": "main",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t3.cpp",
@@ -16,7 +16,7 @@
     },
     {
       "type": "ALLOC",
-      "address": "57d407b782f0",
+      "address": "62ff5095c2f0",
       "size": 128,
       "function": "main",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t3.cpp",
@@ -24,7 +24,7 @@
     },
     {
       "type": "ALLOC",
-      "address": "57d407b78380",
+      "address": "62ff5095c380",
       "size": 256,
       "function": "main",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t3.cpp",
@@ -34,7 +34,7 @@
   "frees": [
     {
       "type": "FREE",
-      "address": "57d407b782a0",
+      "address": "62ff5095c2a0",
       "size": 64,
       "function": "main",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t3.cpp",
@@ -42,7 +42,7 @@
     },
     {
       "type": "FREE",
-      "address": "57d407b782f0",
+      "address": "62ff5095c2f0",
       "size": 128,
       "function": "main",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t3.cpp",
@@ -50,7 +50,7 @@
     },
     {
       "type": "FREE",
-      "address": "57d407b78380",
+      "address": "62ff5095c380",
       "size": 256,
       "function": "main",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t3.cpp",

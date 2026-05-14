@@ -90,7 +90,8 @@ bool IsUserCode(const string &file)
     if (file == "UNKNOWN")
         return false;
 
-    return file.find("/tests/") != string::npos;
+    return file.find("user.cpp") != string::npos ||
+           file.find("/tests/") != string::npos;
 }
 
 string GetFuncName(ADDRINT ip)

@@ -69,7 +69,7 @@ export default function App() {
   const summary = detail?.summary;
 
   return (
-    <div className="page">
+    <div className="app-page">
       <div className="container">
         <div className="header">
           <h1>Memory Trace Dashboard</h1>
