@@ -10,6 +10,7 @@ export default function Dashboard() {
   const [selectedTest, setSelectedTest] = useState(null);
   const [search, setSearch] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     apiClient
@@ -22,6 +23,9 @@ export default function Dashboard() {
       .catch((err) => {
         console.error('Failed to fetch reports:', err);
         setError('Failed to load reports. Please ensure the backend server is running.');
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -50,6 +54,15 @@ export default function Dashboard() {
 
   const detail = selectedTest?.data;
   const summary = detail?.summary;
+
+  if (loading) {
+    return (
+      <div className='max-w-350 mx-auto py-20 px-8 flex flex-col items-center justify-center min-h-[60vh]'>
+        <div className='w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4'></div>
+        <p className='text-gray-500 font-medium text-lg'>Loading memory trace dashboard...</p>
+      </div>
+    );
+  }
 
   return (
     <div className='max-w-350 mx-auto py-10 px-8 max-sm:py-6 max-sm:px-4'>
