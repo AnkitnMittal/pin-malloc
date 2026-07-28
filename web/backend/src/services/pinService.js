@@ -43,11 +43,13 @@ export const analyzeCppCode = async (code) => {
       };
     }
 
-    if (!fs.existsSync(reportPath)) {
+    let rawReport;
+    try {
+      rawReport = await fsPromises.readFile(reportPath, 'utf-8');
+    } catch (err) {
       return { success: false, runtime_error: 'Report generation failed' };
     }
 
-    const rawReport = await fsPromises.readFile(reportPath, 'utf-8');
     const report = JSON.parse(rawReport);
 
     const diagnostics = (report.leaks || [])
@@ -64,8 +66,8 @@ export const analyzeCppCode = async (code) => {
       diagnostics,
     };
   } finally {
-    if (tmpDir && fs.existsSync(tmpDir)) {
-      fs.rmSync(tmpDir, { recursive: true, force: true });
+    if (tmpDir) {
+      await fsPromises.rm(tmpDir, { recursive: true, force: true });
     }
   }
 };

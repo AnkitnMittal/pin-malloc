@@ -24,7 +24,8 @@ export const fetchAllReports = async () => {
 };
 
 export const fetchReportByName = async (testName) => {
-  const filePath = path.join(REPORTS_DIR, `${testName}.json`);
+  const safeTestName = path.basename(testName);
+  const filePath = path.join(REPORTS_DIR, `${safeTestName}.json`);
 
   if (!existsSync(filePath)) {
     return null;
