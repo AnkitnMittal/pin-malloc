@@ -8,7 +8,7 @@
   "allocations": [
     {
       "type": "ALLOC",
-      "address": "5962ad6052a0",
+      "address": "62dc5e9ee2a0",
       "size": 256,
       "function": "main",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t2.cpp",
@@ -19,7 +19,7 @@
   ],
   "leaks": [
     {
-      "address": "5962ad6052a0",
+      "address": "62dc5e9ee2a0",
       "size": 256,
       "function": "main",
       "file": "/home/linuxankit/personal-coding/repos/pin-malloc/tests/t2.cpp",
