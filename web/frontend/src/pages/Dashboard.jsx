@@ -117,7 +117,7 @@ export default function Dashboard() {
           <div className='bg-white border border-gray-200 rounded-[18px] p-6 shadow-sm'>
             <h2 className='text-[22px] mb-6 font-semibold'>Leak Distribution</h2>
             <div className='w-full h-80'>
-              <ResponsiveContainer>
+              <ResponsiveContainer width='100%' height='100%' minWidth={0} minHeight={0}>
                 <BarChart data={chartData}>
                   <CartesianGrid stroke='#e5e7eb' vertical={false} />
                   <XAxis dataKey='name' axisLine={false} tickLine={false} />
