@@ -9,13 +9,20 @@ export default function Dashboard() {
   const [reports, setReports] = useState([]);
   const [selectedTest, setSelectedTest] = useState(null);
   const [search, setSearch] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    apiClient.get('/reports').then(({ data }) => {
-      const sorted = data.sort((a, b) => b.data.summary.total_leaks - a.data.summary.total_leaks);
-      setReports(sorted);
-      setSelectedTest(sorted[0]);
-    });
+    apiClient
+      .get('/reports')
+      .then(({ data }) => {
+        const sorted = data.sort((a, b) => b.data.summary.total_leaks - a.data.summary.total_leaks);
+        setReports(sorted);
+        setSelectedTest(sorted[0]);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch reports:', err);
+        setError('Failed to load reports. Please ensure the backend server is running.');
+      });
   }, []);
 
   const filteredReports = useMemo(() => reports.filter((r) => r.test_name.toLowerCase().includes(search.toLowerCase())), [reports, search]);
@@ -50,6 +57,8 @@ export default function Dashboard() {
         <h1 className='text-[42px] font-bold mb-2'>Memory Trace Dashboard</h1>
         <p className='text-gray-500'>Dynamic memory analysis reports from Intel PIN instrumentation</p>
       </div>
+
+      {error && <div className='mb-10 p-4 rounded-xl text-red-700 bg-red-100 border border-red-300 font-medium'>{error}</div>}
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-10'>
         <StatCard title='Tests' value={stats.tests} theme='light' />
